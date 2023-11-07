@@ -1,0 +1,19 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ title }}</h1>
+</div>
+<div class="card-deck mb-3 text-center">
+    {% for object in object_list %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{ object.name|slice:35 }}</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{ object.price }} руб. </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>{{ object.description|slice:100 }}</li>
+                </ul>
+                <a href="{% url 'products:about_product' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Подробнее</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
