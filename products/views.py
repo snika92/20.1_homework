@@ -13,7 +13,7 @@ def index(request):
 
 def about_product(request, pk):
     context = {
-        'object_list': Product.objects.filter(id=pk),
+        'object': Product.objects.get(id=pk),
         'title': 'О товаре'
     }
     return render(request, 'products/products.html', context)
