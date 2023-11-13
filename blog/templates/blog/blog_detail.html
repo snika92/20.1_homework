@@ -1,0 +1,35 @@
+{% extends 'products/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ object.title }} ({{ object.slug }})</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <img class="card-img-top"
+                                    {#                     src="/media/{{ object.image }}"#}
+                                 src="{{ object.image | mymedia }}"
+                                 alt="Card image cap">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{ object.body }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            Просмотры: {{ object.views_count }}
+                        </div>
+                        <a href="{% url 'blog:list' %}" type="button"
+                                class="btn btn-sm btn-outline-secondary">Назад</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

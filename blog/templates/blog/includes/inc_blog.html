@@ -1,0 +1,42 @@
+{% load my_tags %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'blog:create' %}">Добавить статью</a>
+</div>
+<div class="card-deck mb-3 text-center">
+    {% for object in object_list %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                {% if object.is_active %}
+                    <h4 class="my-0 font-weight-normal">{{ object.title|slice:100 }}</h4>
+                {% else %}
+                    <span class="text-muted">{{ object|title }}</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <img class="card-img-top"
+                        {#                     src="/media/{{ object.image }}"#}
+                     src="{{ object.image | mymedia }}"
+                     alt="Card image cap">
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>{{ object.body|slice:100 }}</li>
+                </ul>
+                <div class="btn-group">
+                    <a href="{% url 'blog:view' object.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="{% url 'blog:edit' object.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'blog:delete' object.pk %}" type="button"
+                       class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+                <div>
+                    {% if object.is_published %}
+                        <a class="btn btn-outline-warning" href="{% url 'blog:toggle_publication' object.pk %}">Убрать
+                            публикацию</a>
+                    {% else %}
+                        <a class="btn btn-outline-warning" href="{% url 'blog:toggle_publication' object.pk %}">Опубликовать</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

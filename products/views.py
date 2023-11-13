@@ -1,30 +1,55 @@
 from django.shortcuts import render
 import json
 from products.models import Product
+from django.views.generic import ListView, DetailView, TemplateView
 
 
-def index(request):
-    context = {
-        'object_list': Product.objects.all(),
+# def index(request):
+#     context = {
+#         'object_list': Product.objects.all(),
+#         'title': 'Товары'
+#     }
+#     return render(request, 'products/product_list.html', context)
+
+
+class ProductListView(ListView):
+    model = Product
+    extra_context = {
         'title': 'Товары'
     }
-    return render(request, 'products/index.html', context)
 
 
-def about_product(request, pk):
-    context = {
-        'object': Product.objects.get(id=pk),
+# def about_product(request, pk):
+#     context = {
+#         'object': Product.objects.get(id=pk),
+#         'title': 'О товаре'
+#     }
+#     return render(request, 'products/product_detail.html', context)
+
+class ProductDetailView(DetailView):
+    model = Product
+    extra_context = {
         'title': 'О товаре'
     }
-    return render(request, 'products/products.html', context)
 
 
-def main(request):
-    context = {
-        'object_list': Product.objects.all()[:3],
+# def main(request):
+#     context = {
+#         'object_list': Product.objects.all()[:3],
+#         'title': 'Главная'
+#     }
+#     return render(request, 'products/main.html', context)
+
+class MainView(TemplateView):
+    template_name = 'products/main.html'
+    extra_context = {
         'title': 'Главная'
     }
-    return render(request, 'products/main.html', context)
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_list'] = Product.objects.all()[:3]
+        return context_data
 
 
 def contacts(request):
